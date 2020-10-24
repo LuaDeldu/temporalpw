@@ -1,5 +1,2 @@
-User-agent: *
-Disallow: /new
-Disallow: /p/
-Disallow: /d/
-Disallow: /.well-known/acme-challenge/
+User-Agent: *
+Disallow: /
