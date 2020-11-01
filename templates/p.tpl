@@ -17,7 +17,7 @@
 <body>
 
   <section class="container w-70 px-5 text-center my-5">
-    <h2>Envoyez des mots de passe de manière sécurisée avec <a href="/">Temporal.PW</a></h2>
+    <h2>Envoi de mots de passe de manière sécurisée<br /><a href="/">Temporal.PW</a></h2>
     <form>
       <div class="form-group mt-4 mb-4">
         <div class="container mb-5">
@@ -33,7 +33,7 @@
   <nav>
     <a href="/">Envoyer un mot de passe</a> |
     <a href="/about">About</a> |
-    <a href="https://github.com/luadeldu/temporalpw/">Source</a>
+    <a href="https://github.com/LuaDeldu/temporalpw">Source</a>
   </nav>
 </footer>
 
@@ -55,7 +55,6 @@
   integrity="sha512-1HyPmPHvi5wFUctYkBhwOYgXmMdbPrDaXKBrbGRI3o1CQkTKazG/RKqR8QwVIjTDOQ3uAOPOFkEbzi99Td6yiQ=="
   crossorigin="anonymous"></script>
 <script src="static/main.js"></script>
-<script src="static/random-password.js"></script>
 
 </body>
 

@@ -4,8 +4,8 @@
 ###### Requirements without Version Specifiers ######
 bottle
 tinydb
-asyncio
 gunicorn
+asyncio
 datetime
 
 ###### Requirements with Version Specifiers ######

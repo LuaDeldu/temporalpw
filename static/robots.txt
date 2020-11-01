@@ -1,2 +1,5 @@
 User-Agent: *
-Disallow: /
+Disallow: /new/
+Disallow: /p/
+Disallow: /new*
+Disallow: /p*

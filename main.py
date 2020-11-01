@@ -2,7 +2,7 @@
 #
 from bottle import Bottle, run, template, static_file, redirect, request, response, abort, ext, post
 from tinydb import TinyDB, Query
-import gunicorn, datetime, string, secrets, hashlib
+import gunicorn, datetime, string, secrets
 
 bottle = Bottle()
 
@@ -37,7 +37,7 @@ def error404(error):
     return template("templates/404")
 
 def make_pw_id():
-    stringSource  = string.ascii_letters \
+    stringSource = string.ascii_letters \
         + string.digits \
         #+ string.punctuation
     password = secrets.choice(string.ascii_lowercase) \
@@ -54,24 +54,10 @@ def make_pw_id():
 
     return password
 
-def make_salt():
-    alphabet = string.ascii_letters + string.digits
-    salt = ''.join(secrets.choice(alphabet) for i in range(8))
-    salt = salt
-
-    return salt
-
-def make_ip_hash(salt):
-    remote_addr = request.environ.get('REMOTE_ADDR').encode()
-    hashedip = salt + ':' + hashlib.shake_128(salt.encode() + remote_addr).hexdigest(15)
-    
-    return hashedip
-
 @bottle.post("/new")
 def new():
     ciphertext = request.POST.get("cipher").strip()
     days = int(request.POST.get("days").strip())
-    myiponly = request.POST.get("myiponly")
 
     if len(ciphertext) < 1 or len(ciphertext) > 8192 \
        or days < 1 or days > 30:
@@ -92,16 +78,10 @@ def new():
             password = db.get(Password.pw_id == pw_id)
             if password:
                 pw_result = password['pw_id']
-       
-    ip_hash = None
-    expire_date = datetime.datetime.now() + datetime.timedelta(days = days)
+
+    expire_date = datetime.datetime.now() + datetime.timedelta(days = days) 
     
-    if myiponly == "true":
-        ## Only store a salted hash of the IP, for privacy
-        ip_salt = make_salt()
-        ip_hash = make_ip_hash(ip_salt)       
-    
-    db.insert({'pw_id': pw_id, 'ciphertext': ciphertext, 'expire_date': str(expire_date), 'ip_hash': ip_hash})
+    db.insert({'pw_id': pw_id, 'ciphertext': ciphertext, 'expire_date': str(expire_date)})
     
     return {"pw_id": pw_id}
 
@@ -118,16 +98,6 @@ def get(pw_id):
     if expire_date < current_date: # Delete immediately if expired
         db.remove(Password.pw_id == pw_id)
         return {"cipher": None}
-
-    if password['ip_hash']:
-        # Only allow viewing from matching IP if myiponly is set
-        ip_salt, ip_hash = (password['ip_hash']).split(":", 1)
-
-        #remote_addr = request.environ.get('HTTP_X_FORWARDED_FOR') or request.environ.get('HTTP_REMOTE_ADDR') or request.environ.get('REMOTE_ADDR')
-        remote_addr = request.environ.get('REMOTE_ADDR')
-
-        if not ip_hash == hashlib.shake_128(ip_salt.encode() + remote_addr.encode()).hexdigest(15):
-            return {"cipher": None}
 
     db.remove(Password.pw_id == pw_id) # Only return encrypted password for a SINGLE viewing
 

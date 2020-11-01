@@ -17,58 +17,82 @@
 <body>
 
   <section class="container w-70 px-5 text-center my-5">
-    <h2>Envoyer des mots de passe de manière sécurisée avec<br /><a href="/">Temporal.PW</a></h2>
+    <h2>Envoi de mots de passe de manière sécurisée<br /><a href="/">Temporal.PW</a></h2>
     <form>
-      <div class="form-group mt-4 mb-4">
+      <div class="form-group mt-4">
         <label id="label-msg" for="secret">Générer ou saisir un mot de passe pour créer une adresse URL sécurisée et
           temporaire :</label>
         <div class="input-group input-group-lg">
           <div class="input-group-prepend">
             <button class="btn btn-outline-secondary btn-copy" type="button" id="copy-button"
-              data-clipboard-target="#secret" data-toggle="popover" data-placement="top"
-              data-content="Copié">
+              data-clipboard-target="#secret" data-toggle="popover" data-placement="top" data-content="Copié">
               <i class="start-icon fas fa-paste" id="copy-fa-button"></i>
             </button>
           </div>
           <input type="text" class="form-control input-lg text-center" id="secret" name="secret"
             placeholder="Saisir un mot de passe" aria-label="Saisie du mot de passe" aria-describedby="genPassword">
         </div>
-        <small id="passwordHelp" class="form-text text-muted mb-2">L'utilisation d'un mot de passe généré aléatoirement
-          est recommandée. À défaut, utiliser un mot de passe suffisament robuste.</small>
-        <button type="button" id="genPassword" class="btn btn-primary btn-sm"
-          onclick="document.getElementById('secret').value = generatePassword(); $('#getUrlButton').prop('disabled', false);">
-          <b>Générer un mot de passe aléatoire</b></button>
-      </div>
-      <div class="form-group">
         <div id="settings">
-          Expiration de l'adresse URL dans <select id="days" name="days">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3" selected>3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select> jours.
-          <br /><br />
-          <div class="form-group form-check">
-            <label class="form-check-label" for="myiponly">
-              <input type="checkbox" class="form-check-input" id="myiponly" name="myiponly">
-              Autoriser l'accès uniquement depuis l'adresse IP actuellement utilisée
-              <small id="checkboxHelp" class="form-text text-muted mt-auto mb-3">Cocher cette case si vous êtes sur
-                le même réseau que le destinataire</small>
-            </label>
+          <div class="form-group mb-4">
+            <small id="passwordHelp" class="form-text text-muted mb-2">L'utilisation d'un mot de passe généré
+              aléatoirement est recommandée. À défaut, utiliser un mot de passe suffisament robuste.</small>
+            <div id="progress-group">
+              <div id="quality-description"></div><div class="progress-title" id="quality__pass" data-quality='0'>Robustesse :</div>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" id="quality-progress-bar"></div>
+              </div>
+            </div>
+            <div id="warningLength"></div>
+            <div class="range__slider" data-min="5" data-max="50">
+              <div class="length__title field-title" data-length='0'>Longueur :</div>
+              <input id="slider" type="range" min="5" max="50" value="20" />
+            </div>
+            <div id="settings-checkbox">
+              <span class="settings__title field-title">Paramètres</span>
+              <div class="setting">
+                <input type="checkbox" id="uppercase" checked />
+                <label for="uppercase">Majuscules</label>
+              </div>
+              <div class="setting">
+                <input type="checkbox" id="lowercase" checked />
+                <label for="lowercase">Minuscules</label>
+              </div>
+              <div class="setting">
+                <input type="checkbox" id="number" checked />
+                <label for="number">Chiffres</label>
+              </div>
+              <div class="setting">
+                <input type="checkbox" id="symbol" />
+                <label for="symbol">Caractères<br />spéciaux</label>
+              </div>
+            </div>
+            <div>
+              <button type="button" id="genPassword" class="btn btn-primary btn-sm mt-2">
+                <b>Générer un mot de passe aléatoire</b></button>
+            </div>
           </div>
+          <div id="expire" class="form-group">
+            Expiration de l'adresse URL dans <select id="days" name="days">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select> jours.
+          </div>
+          <button type="submit" id="getUrlButton" class="btn btn-outline-danger btn-lg"
+            onclick="return generate_url();">Obtenir l'adresse URL pour ce mot de passe</button>
         </div>
+        <div id="warnings" class="form-group mt-4"></div>
       </div>
-      <button type="submit" id="getUrlButton" class="btn btn-outline-danger btn-lg"
-        onclick="return generate_url();">Obtenir l'adresse URL pour ce mot de passe</button>
     </form>
   </section>
 
@@ -76,7 +100,7 @@
     <nav>
       <a href="/">Envoyer un mot de passe</a> |
       <a href="/about">About</a> |
-      <a href="https://github.com/luadeldu/temporalpw/">Source</a>
+      <a href="https://github.com/LuaDeldu/temporalpw">Source</a>
     </nav>
   </footer>
 
@@ -98,7 +122,8 @@
     integrity="sha512-1HyPmPHvi5wFUctYkBhwOYgXmMdbPrDaXKBrbGRI3o1CQkTKazG/RKqR8QwVIjTDOQ3uAOPOFkEbzi99Td6yiQ=="
     crossorigin="anonymous"></script>
   <script src="static/main.js"></script>
-  <script src="static/random-password.js"></script>
+  <script src="static/random-password-gen.js"></script>
+  <script src="static/password-quality-calc.js"></script>
 
 </body>
 

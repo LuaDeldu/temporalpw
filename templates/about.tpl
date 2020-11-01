@@ -126,16 +126,6 @@
                 indique également que le destinataire ne pourra pas voir le mot de passe si quelqu'un d'autre a
                 intercepté l'adresse URL et visualisé le mot de passe en premier.
               </li>
-              <br />
-              <li>
-                En option, vous pouvez choisir d'indiquer au serveur de ne permettre la visualisation d'un mot de passe
-                qu'à partir de la même adresse IP (utile pour envoyer des mots de passe à quelqu'un présent dans le même
-                réseau). L'adresse IP de l'émetteur est récupérée par le serveur et hachée par la fonction de hachage
-                cryptographique SHAKE-128 (de la même famille que SHA-3) avant d'être stockée sur le serveur.
-                L'adresse IP de l'émetteur n'est jamais transmise au destinataire, son hash est simplement comparé avec
-                le hash de l'adresse IP du destinataire. Si cela concorde, le destinataire peut visualiser le mot de
-                passe, sinon, une erreur 404 est transmise au destinataire.
-              </li>
             </ul>
           </div>
         </div>
@@ -158,7 +148,7 @@
               </li>
               <br />
               <li>
-                <span id="bold-text">100% Open-Source !</span> Sources disponibles <a href="https://github.com/luadeldu/temporalpw/" target="_blank">ici</a>
+                <span id="bold-text">100% Open-Source !</span> Sources disponibles <a href="https://github.com/LuaDeldu/temporalpw" target="_blank">ici</a>
               </li>
               <br />
               <li>
@@ -225,7 +215,7 @@
     <nav>
       <a href="/">Envoyer un mot de passe</a> |
       <a href="/about">About</a> |
-      <a href="https://github.com/luadeldu/temporalpw/">Source</a>
+      <a href="https://github.com/LuaDeldu/temporalpw">Source</a>
     </nav>
   </footer>
 
