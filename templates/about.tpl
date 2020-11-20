@@ -12,11 +12,12 @@
 </head>
 
 <body>
-  <section class="container w-70 px-5 text-justify my-5">
+  <section class="container w-70 px-5 text-justify mt-5 mb-3">
 
     <h1>À propos de <a href="/">Temporal.PW</a></h1><br />
     <p>
-      <a href="/">Temporal.PW</a> peut convertir un mot de passe en une adresse URL unique, temporaire et sécurisée. Cette
+      <a href="/">Temporal.PW</a> peut convertir un mot de passe en une adresse URL unique, temporaire et sécurisée.
+      Cette
       adresse URL peut alors être envoyée par E-Mail ou tout autre canal de communication non sécurisé vers un
       destinataire unique.
       <br /><br />
@@ -143,12 +144,13 @@
           <div class="card-body">
             <ul>
               <li>
-                Facile à auditer : moins de 200 lignes de Python pour le Back-End, et environ 250 lignes de JavaScript
-                pour le Front-End.
+                Facile à auditer : moins de 200 lignes de Python pour le Back-End, et fichiers JavaScript séparés par
+                fonction pour le Front-End.
               </li>
               <br />
               <li>
-                <span id="bold-text">100% Open-Source !</span> Sources disponibles <a href="https://github.com/LuaDeldu/temporalpw" target="_blank">ici</a>
+                <span id="bold-text">100% Open-Source !</span> Sources disponibles <a
+                  href="https://github.com/LuaDeldu/temporalpw" target="_blank">ici</a>
               </li>
               <br />
               <li>
@@ -211,7 +213,7 @@
 
   </section>
 
-  <footer class="page-footer text-center mt-2">
+  <footer class="page-footer text-center mb-2">
     <nav>
       <a href="/">Envoyer un mot de passe</a> |
       <a href="/about">About</a> |

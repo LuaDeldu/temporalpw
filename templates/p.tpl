@@ -16,20 +16,20 @@
 
 <body>
 
-  <section class="container w-70 px-5 text-center my-5">
+  <section class="container w-70 px-5 text-center mt-5 mb-3">
     <h2>Envoi de mots de passe de manière sécurisée<br /><a href="/">Temporal.PW</a></h2>
     <form>
-      <div class="form-group mt-4 mb-4">
+      <div class="form-group mt-4">
         <div class="container mb-5">
-          <label id="label-msg-p" for="password"></label>
+          <label id="label-msg-p" for="div-password"></label>
           <div id="div-password"></div>
         </div>
-        <div class="container mb-5" id="p-warning"></div>
+        <div id="p-warning"></div>
       </div>
     </form>
   </section>
 
-<footer class="page-footer text-center mt-2">
+<footer class="page-footer text-center mb-2">
   <nav>
     <a href="/">Envoyer un mot de passe</a> |
     <a href="/about">About</a> |

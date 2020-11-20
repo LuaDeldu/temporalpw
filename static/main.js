@@ -53,7 +53,7 @@ function got_id(data, status, encoded_key) {
   $("#secret").val(base_url + "/p#" + token + SHA512.hex(token).substr(0, 2));
   $("#secret").attr("readonly", true);
 
-  let info = "<div class='container'><div class='row justify-content-md-center'><div class='col-sm-10'><div class='alert alert-simple alert-warning alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light' role='alert'><i class='start-icon fa fa-exclamation-triangle'></i> Cette adresse URL ne peut être utilisée qu'<span id='bold-text-underline'>une seule fois</span> pour voir le mot de passe !</div></div><div class='col-sm-10'><div class='alert alert-simple alert-info alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light' role='alert'><i class='start-icon fa fa-info-circle'></i> Cette adresse URL expirera dans <span id='bold-text'>" + document.getElementById('days').value + "</span> jour(s).</div></div></div></div>";
+  let info = "<div class='container'><div class='row justify-content-md-center'><div class='col-sm-10'><div class='alert alert-simple alert-warning alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light' role='alert'><i class='start-icon fa fa-exclamation-triangle'></i> Cette adresse URL ne peut être utilisée qu'<span id='bold-text-underline'>une seule fois</span> pour voir le mot de passe !</div></div><div class='col-sm-10'><div class='alert alert-simple alert-info alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light' role='alert'><i class='start-icon fa fa-info-circle'></i> Cette adresse URL expirera automatiquement dans <span id='bold-text'>" + document.getElementById('days').value + "</span> jour(s).</div></div></div></div>";
 
   $("#settings").hide();
   $("#warnings").html(info + "<br />");
@@ -94,10 +94,9 @@ function passQualityCalculation(passData) {
   const startColorRgb = [244, 67, 54];
   const endColorRgb = [0, 200, 83];
   const qualityPass = $("#quality__pass");
-  const qualityProgressBar = $('#quality-progress-bar');
   const qualityDescription = $('#quality-description');
+  const qualityProgressBar = $('#quality-progress-bar');
 
-  //console.log(passwordInput.value, quality)
   qualityPass.attr("data-quality", qualityPassword + " bits");
   const progressValue = Math.max(Math.min(qualityPassword / 128, 1), 0);
   qualityProgressBar.css("width", progressValue * 100 + '%');
@@ -115,6 +114,17 @@ function passQualityCalculation(passData) {
     (startColorRgb[0] - (startColorRgb[0] - endColorRgb[0]) * progressValue) + ',' +
     (startColorRgb[1] - (startColorRgb[1] - endColorRgb[1]) * progressValue) + ',' +
     (startColorRgb[2] - (startColorRgb[2] - endColorRgb[2]) * progressValue) + ')');
+}
+function passQualityReset() {
+  const qualityPass = $("#quality__pass");
+  const qualityDescription = $('#quality-description');
+  const qualityProgressBar = $('#quality-progress-bar');
+
+  qualityPass.attr("data-quality", 'N/A');
+  qualityDescription.text('');
+  qualityDescription.css("color", 'rgb(150, 155, 165)');
+  qualityProgressBar.css("width", '100%');
+  qualityProgressBar.css("background-color", 'rgb(40, 45, 50)');
 }
 
 $(document).ready(function () {
@@ -187,6 +197,7 @@ $(document).ready(function () {
     } else {
       hasPassword(false);
       checkPassLength(false);
+      passQualityReset();
     }
   });
 });

@@ -42,46 +42,47 @@ $(".setting").each(function () {
 // Generator Functions
 // All the functions that are responsible to return a random value taht we will use to create password.
 function getRandomLower() {
-  const lowersCharset = 'abcdefghijknopqrstuvwxyz';
-  let resultLower = String.fromCharCode(getRandomByte(lowersCharset.length) + 97);
+  const lowersCharset = 'abcdefghijklmnopqrstuvwxyz';
+  let resultLower = String.fromCharCode(getRandomByte(97, lowersCharset.length));
   return resultLower
 }
 
 function getRandomUpper() {
-  const uppersCharset = 'ACDEFGHJKLMNPQRSTUVWXYZ';
-  let resultUpper = String.fromCharCode(getRandomByte(uppersCharset.length) + 65);
+  const uppersCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let resultUpper = String.fromCharCode(getRandomByte(65, uppersCharset.length));
   return resultUpper
 }
 
 function getRandomNumber() {
   const numbersCharset = '0123456789';
-  let resultNumber = String.fromCharCode(getRandomByte(numbersCharset.length) + 48);
+  let resultNumber = String.fromCharCode(getRandomByte(48, numbersCharset.length));
   return resultNumber
 }
 
 function getRandomSymbol() {
   const symbolsCharset = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-
-  let resultSymbol = symbolsCharset[getRandomByte(symbolsCharset.length)];
+  let resultSymbol = symbolsCharset[getRandomByte(0, symbolsCharset.length)];
   return resultSymbol
 }
 // Attempt to generate cryptographically secure random byte, with optional max for using as a charset index
-function getRandomByte(max) {
+function getRandomByte(padding, length) {
   // http://caniuse.com/#feat=getrandomvalues
   let crypto = window.crypto || window.msCrypto;
   if (crypto && crypto.getRandomValues) {
     //var randomBuffer = new Uint8Array(1); // var randomBuffer = new Uint16Array(1);
-    let randomBuffer = new Uint32Array(1);
+    const randomBuffer = new Uint32Array(1);
     while (true) {
       crypto.getRandomValues(randomBuffer);
-      let randomByte = Math.floor(randomBuffer[0] / (Math.pow(2, 32)) * 10);
-      if (randomByte <= max) {
-        return randomByte;
+      //let randomByte = Math.floor(randomBuffer[0] / (Math.pow(2, 32)) * 10);
+      let randomByte = randomBuffer[0] / (0xffffffff + 1); // 0xFFFFFFFF = uint32.MaxValue (+1 because Math.random is inclusive of 0, but not 1)
+      let resultRandomByte = Math.floor(randomByte * length + padding);
+      if (resultRandomByte <= (padding + length)) {
+        return resultRandomByte;
       }
     }
   } else {
-    let elseresult = Math.floor(Math.random() * max);
-    return elseresult;
+    const elseResult = Math.floor(Math.random() * max);
+    return elseResult;
   }
 }
 

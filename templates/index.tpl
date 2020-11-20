@@ -16,13 +16,13 @@
 
 <body>
 
-  <section class="container w-70 px-5 text-center my-5">
+  <section class="container w-70 px-5 text-center mt-5 mb-3">
     <h2>Envoi de mots de passe de manière sécurisée<br /><a href="/">Temporal.PW</a></h2>
     <form>
       <div class="form-group mt-4">
         <label id="label-msg" for="secret">Générer ou saisir un mot de passe pour créer une adresse URL sécurisée et
           temporaire :</label>
-        <div class="input-group input-group-lg">
+        <div id="input-password" class="input-group input-group-lg">
           <div class="input-group-prepend">
             <button class="btn btn-outline-secondary btn-copy" type="button" id="copy-button"
               data-clipboard-target="#secret" data-toggle="popover" data-placement="top" data-content="Copié">
@@ -37,7 +37,7 @@
             <small id="passwordHelp" class="form-text text-muted mb-2">L'utilisation d'un mot de passe généré
               aléatoirement est recommandée. À défaut, utiliser un mot de passe suffisament robuste.</small>
             <div id="progress-group">
-              <div id="quality-description"></div><div class="progress-title" id="quality__pass" data-quality='0'>Robustesse :</div>
+              <div id="quality-description"></div><div class="progress-title" id="quality__pass" data-quality='N/A'>Robustesse :</div>
               <div class="progress">
                 <div class="progress-bar progress-bar-striped" role="progressbar" id="quality-progress-bar"></div>
               </div>
@@ -54,20 +54,20 @@
                 <label for="uppercase">Majuscules</label>
               </div>
               <div class="setting">
-                <input type="checkbox" id="lowercase" checked />
-                <label for="lowercase">Minuscules</label>
-              </div>
-              <div class="setting">
                 <input type="checkbox" id="number" checked />
                 <label for="number">Chiffres</label>
               </div>
               <div class="setting">
-                <input type="checkbox" id="symbol" />
+                <input type="checkbox" id="lowercase" checked />
+                <label for="lowercase">Minuscules</label>
+              </div>
+              <div class="setting">
+                <input type="checkbox" id="symbol" checked />
                 <label for="symbol">Caractères<br />spéciaux</label>
               </div>
             </div>
             <div>
-              <button type="button" id="genPassword" class="btn btn-primary btn-sm mt-2">
+              <button type="button" id="genPassword" class="btn btn-primary btn-sm">
                 <b>Générer un mot de passe aléatoire</b></button>
             </div>
           </div>
@@ -88,7 +88,7 @@
               <option value="30">30</option>
             </select> jours.
           </div>
-          <button type="submit" id="getUrlButton" class="btn btn-outline-danger btn-lg"
+          <button type="submit" id="getUrlButton" class="btn btn-outline-danger btn-lg px-5"
             onclick="return generate_url();">Obtenir l'adresse URL pour ce mot de passe</button>
         </div>
         <div id="warnings" class="form-group mt-4"></div>
@@ -96,7 +96,7 @@
     </form>
   </section>
 
-  <footer class="page-footer text-center mt-2">
+  <footer class="page-footer text-center mb-2">
     <nav>
       <a href="/">Envoyer un mot de passe</a> |
       <a href="/about">About</a> |
